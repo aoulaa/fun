@@ -6,6 +6,7 @@ admin_send = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(text="отправ админу", callback_data='admin_msg'),
+            InlineKeyboardButton(text="Отменит", callback_data='cancel')
         ],
     ],)
 
@@ -15,5 +16,6 @@ reply_1 = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(text="подтвердить", callback_data='confirm'),
+            InlineKeyboardButton(text="Отменит", callback_data='cancel_admin')
         ],
     ],)

@@ -1,1 +1,1 @@
-from .moves import Moves
+from .moves import Data

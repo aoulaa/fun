@@ -4,7 +4,7 @@ from aiogram.types import ReplyKeyboardRemove
 from aiogram.utils.markdown import hbold
 
 from keyboards.inline.butons import admin_send
-from keyboards.menu_buttons import serve
+from keyboards.default.menu_buttons import serve
 from loader import dp, db
 
 

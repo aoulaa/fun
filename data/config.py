@@ -12,6 +12,8 @@ BOT_TOKEN = str(os.getenv("BOT_TOKEN"))
 admins = [
     1079453114,
 ]
+channels = ['@get_me1']
+
 ip = os.getenv("ip")
 
 aiogram_redis = {

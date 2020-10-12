@@ -3,7 +3,7 @@ import sqlite3
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 
-from keyboards.menu_buttons import menu
+from keyboards.default.menu_buttons import menu
 from loader import dp, db
 
 
