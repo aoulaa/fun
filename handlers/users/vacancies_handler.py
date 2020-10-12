@@ -115,8 +115,6 @@ async def confirm(call: CallbackQuery):
         await call.answer(cache_time=20)
         await bot.send_message(user, 'Админ подтвердил ваш запрос.')
         await bot.send_message(target_channel, text)
-    # message = await call.message.edit_reply_markup()
-    # await message.send_copy(chat_id=target_channel)
         await call.message.delete_reply_markup()
     elif len(user) <= 8:
         target_channel = channels[0]
@@ -127,24 +125,6 @@ async def confirm(call: CallbackQuery):
         await bot.send_message(target_channel, text)
 
         await call.message.delete_reply_markup()
-
-
-
-
-    # if len(user) == 9:
-    #     text = call.message.html_text
-    #     text = text[12:]
-    # elif len(user) <= 8:
-    #     message = await call.message.text
-    #     await call.message.delete_reply_markup()
-    #     target_channel = channels[0]
-    #     await message.send_copy(chat_id=target_channel)
-    #
-    #     text = call.message.html_text
-    #     text = text[11:] # пост котрый должен отправит
-    #     # await call.message.answer(text)
-    #     await call.answer('вы одобрли этот пост', show_alert=True)
-
 
 
 @dp.callback_query_handler(text="cancel")
@@ -163,7 +143,6 @@ async def cancel_admin(call: CallbackQuery, state: FSMContext):
     user_id = user_id[0][1:-1]
     await call.answer(cache_time=20)
     await call.message.answer('вы отменили пост, оставьте комментарий почему')
-    # нужен забрат input с админа и отправит юсеру
     await bot.send_message(user_id, 'Ваш пост отменили: \n\n')
     await call.message.delete_reply_markup()
     await Data.data1.set()
