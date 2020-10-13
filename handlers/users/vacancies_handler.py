@@ -81,13 +81,13 @@ async def add_contact(message: types.message, state: FSMContext):
 
     msg_text = "\n".join(
             [f'%{user1[0]}%',
-             hbold(user1[9]) + '\n\n' +
-             hbold('Название вашей фирмы/компании:  ') + f'{user1[10]}',
-             hbold('Обязанности:  ') + f'{user1[11]}',
-             hbold('График работы:  ') + f'{user1[12]}',
-             hbold('Зарплата:  ') + f'{user1[13]}',
-             hbold('Адрес:  ') + f'{user1[14]}',
-             hbold('Контакт:  ') + f'{user1[15]}',
+             hbold(user1[10]) + '\n\n' +
+             hbold('Название вашей фирмы/компании:  ') + f'{user1[11]}',
+             hbold('Обязанности:  ') + f'{user1[12]}',
+             hbold('График работы:  ') + f'{user1[13]}',
+             hbold('Зарплата:  ') + f'{user1[14]}',
+             hbold('Адрес:  ') + f'{user1[15]}',
+             hbold('Контакт:  ') + f'{user1[16]}',
              ]
         )
     await message.answer(msg_text, reply_markup=admin_send)

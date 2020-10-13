@@ -31,6 +31,7 @@ class Database:
         sql = """
         CREATE TABLE Users (
             id int NOT NULL,
+            name_user varchar(255) NOT NULL,
             title str,
             name varchar(255),
             self_info varchar(255),
@@ -45,7 +46,7 @@ class Database:
             schedule varchar(255),
             salary varchar(255),
             address varchar(200),
-            contact varchar(255),
+            contact varchar(255)
 
             PRIMARY KEY (id)
             );
@@ -60,6 +61,7 @@ class Database:
         return sql, tuple(parameters.values())
 
     def add_user(self, id: int,
+                 name_user: str,
                  title: str = None,
                  name: str = None,
                  self_info: str = None,
@@ -67,30 +69,32 @@ class Database:
                  profession: str = None,
                  language: str = None,
                  desirable_job: str = None,
-                 number: int = None,
+                 number: str = None,
                  needed: str = None,
                  company_name: str = None,
                  duties: str = None,
                  schedule: str = None,
                  salary: str = None,
-                 address: int = None,
-                 contact: str = None,
+                 address: str = None,
+                 contact: str = None
                  ):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
         sql = """
-        INSERT INTO Users(id, title, name, self_info, education, profession, language, desirable_job, number,
+        INSERT INTO Users(id, name_user, title, name, self_info, education, profession, language, desirable_job, number,
          needed, company_name, duties, schedule, salary, address,
-        contact) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        contact) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
-        self.execute(sql, parameters=(id, title,
+        self.execute(sql, parameters=(id,name_user,
+                                      title,
                                       name, self_info,
                                       language, profession,
                                       desirable_job, number,
                                       education, needed,
                                       company_name, duties,
                                       schedule, salary,
-                                      address, contact
+                                      address, contact,
+
                                       ), commit=True)
 
     def update_title(self, title, id):
@@ -232,7 +236,7 @@ class Database:
 
     def select_name(self):
         sql = """
-        SELECT name FROM Users
+        SELECT name_user FROM Users
         """
         return self.execute(sql, fetchall=True)
 

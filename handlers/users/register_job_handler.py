@@ -93,14 +93,14 @@ async def number(message: types.message, state: FSMContext):
 
     msg_text_1 = "\n".join(
             [f'%{user1[0]}%',
-             hbold(user1[1]) + '\n\n' +
-             hbold('Имя, Лет:  ') + f'{user1[2]}',
-             hbold('О себе:  ') + f'{user1[3]}',
-             hbold('Образование:  ') + f'{user1[4]}',
-             hbold('Профессия:  ') + f'{user1[5]}',
-             hbold('Языки:  ') + f'{user1[6]}',
-             hbold('Желательная работа:  ') + f'{user1[7]}',
-             hbold('Контакт:  ') + f'{user1[8]}']
+             hbold(user1[2]) + '\n\n' +
+             hbold('Имя, Лет:  ') + f'{user1[3]}',
+             hbold('О себе:  ') + f'{user1[4]}',
+             hbold('Образование:  ') + f'{user1[5]}',
+             hbold('Профессия:  ') + f'{user1[6]}',
+             hbold('Языки:  ') + f'{user1[7]}',
+             hbold('Желательная работа:  ') + f'{user1[8]}',
+             hbold('Контакт:  ') + f'{user1[9]}']
         )
 
     await message.answer(msg_text_1, reply_markup=admin_send)
