@@ -13,6 +13,7 @@ async def bot_start(message: types.Message):
         db.add_user(id=message.from_user.id)
     except sqlite3.IntegrityError as err:
         print(err)
+
     await message.answer(f'Привет, {message.from_user.full_name}!',
                          reply_markup=menu)
 
@@ -27,3 +28,10 @@ async def go_back(message: types.Message):
 async def info_about_company(message: types.Message):
     await message.answer('бла бла бла бла бла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла бла ')
 
+
+@dp.message_handler(commands=['getuser'])
+async def number(message: types.message):
+    count = db.count_users()[0]
+    user_table = db.select_from_table()
+    await message.answer(f'каличство усеров: {count}')
+    await message.answer(f'user id: {user_table}')

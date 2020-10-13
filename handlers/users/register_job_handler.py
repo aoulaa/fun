@@ -92,24 +92,18 @@ async def number(message: types.message, state: FSMContext):
     user1 = db.select_user(id=message.from_user.id)
 
     msg_text_1 = "\n".join(
-        [f'%{user1[0]}%',
-         hbold(user1[1]) + '\n\n' +
-         hbold('Имя, Лет:  ') + f'{user1[2]}',
-         hbold('О себе:  ') + f'{user1[3]}',
-         hbold('Образование:  ') + f'{user1[4]}',
-         hbold('Профессия:  ') + f'{user1[5]}',
-         hbold('Языки:  ') + f'{user1[6]}',
-         hbold('Желательная работа:  ') + f'{user1[7]}',
-         hbold('Контакт:  ') + f'{user1[8]}']
-    )
+            [f'%{user1[0]}%',
+             hbold(user1[1]) + '\n\n' +
+             hbold('Имя, Лет:  ') + f'{user1[2]}',
+             hbold('О себе:  ') + f'{user1[3]}',
+             hbold('Образование:  ') + f'{user1[4]}',
+             hbold('Профессия:  ') + f'{user1[5]}',
+             hbold('Языки:  ') + f'{user1[6]}',
+             hbold('Желательная работа:  ') + f'{user1[7]}',
+             hbold('Контакт:  ') + f'{user1[8]}']
+        )
 
     await message.answer(msg_text_1, reply_markup=admin_send)
 
     await state.finish()
-
-
-@dp.message_handler(commands=['getuser'])
-async def number(message: types.message):
-    user2 = db.select_all_users()
-    await message.answer(user2)
 

@@ -46,7 +46,7 @@ class Database:
             salary varchar(255),
             address varchar(200),
             contact varchar(255),
-            
+
             PRIMARY KEY (id)
             );
 """
@@ -223,6 +223,18 @@ class Database:
 
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE", commit=True)
+
+    def select_from_table(self):
+        sql = """
+        SELECT id FROM Users
+        """
+        return self.execute(sql, fetchall=True)
+
+    def select_name(self):
+        sql = """
+        SELECT name FROM Users
+        """
+        return self.execute(sql, fetchall=True)
 
 
 def logger(statement):
