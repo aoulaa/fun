@@ -5,3 +5,8 @@ class Data(StatesGroup):
 
     data1 = State()
 
+
+class PostData(StatesGroup):
+
+    save = State()
+

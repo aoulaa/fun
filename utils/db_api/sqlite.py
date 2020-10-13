@@ -85,7 +85,7 @@ class Database:
          needed, company_name, duties, schedule, salary, address,
         contact) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
-        self.execute(sql, parameters=(id,name_user,
+        self.execute(sql, parameters=(id, name_user,
                                       title,
                                       name, self_info,
                                       language, profession,

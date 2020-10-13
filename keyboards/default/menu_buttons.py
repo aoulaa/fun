@@ -17,6 +17,7 @@ back = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='⬅Назад'), ], ]
 serve = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text='📝 ищу работу'), KeyboardButton(text='💼 нужен сотрудник')],
+        [KeyboardButton(text='Отправить готовый пост 📄'), ],
         [KeyboardButton(text='⬅Назад')],
 
     ],
