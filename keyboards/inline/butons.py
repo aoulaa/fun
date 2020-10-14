@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 admin_send = InlineKeyboardMarkup(
-    row_width=1,
+    row_width=2,
 
     inline_keyboard=[
         [
@@ -9,14 +9,18 @@ admin_send = InlineKeyboardMarkup(
             InlineKeyboardButton(text="Отменит❌", callback_data='cancel')
         ],
 
-    ],resize_keyboard=True)
+    ], resize_keyboard=True)
 
 reply_1 = InlineKeyboardMarkup(
-    row_width=1,
+    row_width=2,
 
     inline_keyboard=[
         [
             InlineKeyboardButton(text="подтвердить✅", callback_data='confirm'),
             InlineKeyboardButton(text="Отменит❌", callback_data='cancel_admin')
         ],
-    ],resize_keyboard=True)
+    ], resize_keyboard=True)
+
+
+
+

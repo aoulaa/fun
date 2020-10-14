@@ -14,7 +14,7 @@ async def on_startup(dp):
     except Exception as err:
         print(err)
     # db.delete_users()
-    # print(db.select_all_users())
+    print(db.select_all_users())
     await on_startup_notify(dp)
     # await set_default_commands(dp)
 

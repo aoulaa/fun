@@ -89,5 +89,3 @@ async def add_contact(message: types.message, state: FSMContext):
         )
     await message.answer(msg_text, reply_markup=admin_send)
     await state.finish()
-
-

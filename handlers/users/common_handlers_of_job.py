@@ -6,8 +6,8 @@ from aiogram.utils.markdown import hbold
 
 from data.config import admins, channels
 from keyboards.default.menu_buttons import menu, serve
-from keyboards.inline.butons import reply_1
-from loader import bot, dp
+from keyboards.inline.butons import reply_1, admin_send
+from loader import bot, dp, db
 from states import Data, PostData
 
 
@@ -30,7 +30,6 @@ async def confirm(call: CallbackQuery):
         target_channel = channels[0]
         text = call.message.html_text
         text = text[12:]
-        await call.answer(cache_time=20)
         await bot.send_message(user, 'Админ подтвердил ваш запрос.',
                                reply_markup=menu)
         await bot.send_message(target_channel, text)
@@ -39,7 +38,6 @@ async def confirm(call: CallbackQuery):
         target_channel = channels[0]
         text = call.message.html_text
         text = text[11:]
-        await call.answer(cache_time=20)
         await bot.send_message(user, 'Админ подтвердил ваш запрос.',
                                reply_markup=menu)
         await bot.send_message(target_channel, text)
@@ -84,16 +82,23 @@ async def send_comment(message: types.Message, state: FSMContext):
 
 # sending ready post
 @dp.message_handler(text='Отправить готовый пост 📄')
-async def send_ready_post(message: types.message, state: FSMContext):
-    await message.answer('otpravte ashu post')
+async def send_ready_post(message: types.message):
+    await message.answer('Отправьте мне текст поста на публикацию', )
+
     await PostData.save.set()
 
 
 @dp.message_handler(state=PostData.save)
-async def send_post(message: types.Message, state: FSMContext):
-    text = message.text
-    await state.update_data(text=text)
-    data = await state.get_data()
-    post = data.get("text")
-    await bot.send_message(admins[0], text=post)
+async def ready_post(message: types.Message, state: FSMContext):
+    ready_post = message.html_text
+    db.update_ready_post(ready_post=ready_post, id=message.from_user.id)
+    user1 = db.select_user(id=message.from_user.id)
+
+    msg_text = "\n".join(
+            [f'%{user1[0]}%',
+             user1[17]
+             ]
+        )
+    await message.answer(msg_text, reply_markup=admin_send)
     await state.finish()
+

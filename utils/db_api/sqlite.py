@@ -46,7 +46,8 @@ class Database:
             schedule varchar(255),
             salary varchar(255),
             address varchar(200),
-            contact varchar(255)
+            contact varchar(255),
+            ready_post varchar(1000),
 
             PRIMARY KEY (id)
             );
@@ -76,14 +77,15 @@ class Database:
                  schedule: str = None,
                  salary: str = None,
                  address: str = None,
-                 contact: str = None
+                 contact: str = None,
+                 ready_post: str = None
                  ):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
         sql = """
         INSERT INTO Users(id, name_user, title, name, self_info, education, profession, language, desirable_job, number,
          needed, company_name, duties, schedule, salary, address,
-        contact) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        contact, ready_post) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         self.execute(sql, parameters=(id, name_user,
                                       title,
@@ -94,8 +96,15 @@ class Database:
                                       company_name, duties,
                                       schedule, salary,
                                       address, contact,
-
+                                      ready_post,
                                       ), commit=True)
+
+    def update_ready_post(self, ready_post, id):
+
+        sql = f"""
+        UPDATE Users SET ready_post=? WHERE id=?
+        """
+        return self.execute(sql, parameters=(ready_post, id), commit=True)
 
     def update_title(self, title, id):
 
@@ -226,7 +235,7 @@ class Database:
         return self.execute(sql, parameters=(number, id), commit=True)
 
     def delete_users(self):
-        self.execute("DELETE FROM Users WHERE TRUE", commit=True)
+        self.execute("""DELETE FROM Users WHERE TRUE""", commit=True)
 
     def select_from_table(self):
         sql = """
