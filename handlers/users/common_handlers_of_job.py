@@ -18,7 +18,7 @@ async def send_to_admin(call: CallbackQuery):
 
     text = call.message.html_text
     admin = admins[0]
-    await bot.send_message(admin,  text, reply_markup=reply_1)
+    await call.message.send_copy(admin, reply_markup=reply_1)
     await call.message.delete_reply_markup()
     await call.message.answer('Ваше ответ отправлен админу ждите ответа.')
 
