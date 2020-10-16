@@ -22,5 +22,11 @@ reply_1 = InlineKeyboardMarkup(
     ], resize_keyboard=True)
 
 
+send_to_channel = InlineKeyboardMarkup(
+    row_width=2,
 
-
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="сделать пост✅", callback_data='post_in_channel'),
+        ],
+    ], resize_keyboard=True)

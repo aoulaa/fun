@@ -1,11 +1,12 @@
 import re
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, ContentType
 from aiogram.utils.markdown import hbold
 
 from data.config import admins, channels
-from keyboards.default.menu_buttons import menu, serve
+from keyboards.default.menu_buttons import menu, serve, post_buttons
 from keyboards.inline.butons import reply_1, admin_send
 from loader import bot, dp, db
 from states import Data, PostData
@@ -14,9 +15,10 @@ from states import Data, PostData
 @dp.callback_query_handler(text="admin_msg")
 async def send_to_admin(call: CallbackQuery):
     await call.answer(cache_time=60)
+
     text = call.message.html_text
     admin = admins[0]
-    await bot.send_message(admin, text, reply_markup=reply_1)
+    await bot.send_message(admin,  text, reply_markup=reply_1)
     await call.message.delete_reply_markup()
     await call.message.answer('Ваше ответ отправлен админу ждите ответа.')
 
@@ -82,6 +84,12 @@ async def send_comment(message: types.Message, state: FSMContext):
 
 # sending ready post
 @dp.message_handler(text='Отправить готовый пост 📄')
+async def post_any(message: types.message):
+    await message.answer('выбрие тип поста',
+                         reply_markup=post_buttons)
+
+
+@dp.message_handler(text='Пост без Фото📄')
 async def send_ready_post(message: types.message):
     await message.answer('Отправьте мне текст поста на публикацию', )
 
@@ -95,10 +103,43 @@ async def ready_post(message: types.Message, state: FSMContext):
     user1 = db.select_user(id=message.from_user.id)
 
     msg_text = "\n".join(
-            [f'%{user1[0]}%',
-             user1[17]
-             ]
-        )
+        [f'%{user1[0]}%',
+         user1[17]
+         ]
+    )
     await message.answer(msg_text, reply_markup=admin_send)
     await state.finish()
 
+
+# send post with photo
+@dp.message_handler(text='Пост с Фото📄')
+async def send_post_with_photo(message: types.message, state: FSMContext):
+    await message.answer('Отправьте фото на публикацию', )
+
+    await state.set_state('photo_state')
+
+
+@dp.message_handler(state='photo_state', content_types=ContentType.PHOTO)
+async def catch_photo(message: types.message, state: FSMContext):
+    await message.photo[-1].download()
+    photo_id = message.photo[-1].file_id
+    db.update_save_id(save_id=photo_id, id=message.from_user.id)
+    await message.answer('отправьте текст')
+    await state.set_state('text_state')
+
+
+@dp.message_handler(state='text_state')
+async def ready_post(message: types.Message, state: FSMContext):
+    ready_post = message.html_text
+    db.update_ready_post(ready_post=ready_post, id=message.from_user.id)
+    user1 = db.select_user(id=message.from_user.id)
+    print(user1[18])
+    msg_text = "\n".join(
+        [
+            f'%{user1[0]}%',
+            user1[17]
+        ]
+    )
+    await message.answer_photo(photo=user1[18], caption=msg_text, reply_markup=admin_send)
+    # await message.answer(msg_text, reply_markup=admin_send)
+    await state.finish()

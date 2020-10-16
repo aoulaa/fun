@@ -1,7 +1,7 @@
 import asyncio
-
+from loader import dp
 from aiogram import types, Dispatcher
-from aiogram.dispatcher import DEFAULT_RATE_LIMIT
+from aiogram.dispatcher import DEFAULT_RATE_LIMIT, FSMContext
 from aiogram.dispatcher.handler import CancelHandler, current_handler
 from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram.utils.exceptions import Throttled
@@ -46,3 +46,10 @@ class ThrottlingMiddleware(BaseMiddleware):
         thr = await dispatcher.check_key(key)
         if thr.exceeded_count == throttled.exceeded_count:
             await message.reply('Unlocked.')
+
+
+async def leave_state(self, message: types.Message, data: dict, state: FSMContext):
+    if message.text.startswith('/') and state:
+        await state.reset_state()
+
+        state = dp.current_state(chat=message.chat.id, user=message.from_user.id)

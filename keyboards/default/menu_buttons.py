@@ -24,3 +24,9 @@ serve = ReplyKeyboardMarkup(
     resize_keyboard=True,
     one_time_keyboard=True
 )
+
+post_buttons = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Пост с Фото📄'),
+                                              KeyboardButton(text='Пост без Фото📄')], ],
+                                   one_time_keyboard=True,
+                                   resize_keyboard=True,
+                                   )

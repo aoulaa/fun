@@ -1,6 +1,8 @@
 import sqlite3
 
 from aiogram import types
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.builtin import CommandStart
 
 from keyboards.default.menu_buttons import menu
@@ -38,3 +40,9 @@ async def number(message: types.message):
     await message.answer(f'каличство усеров: {count}')
     await message.answer(f'user id: {user_table}')
     await message.answer(f'имя усеров: {name}')
+
+
+@dp.message_handler(Command(['cancel', 'start', 'help']), state="*")
+async def bot_start(message: types.Message, state: FSMContext):
+    await state.reset_state()
+    await message.answer('если что но пошло не так можете нажмат на /start')

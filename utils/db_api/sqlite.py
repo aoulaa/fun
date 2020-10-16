@@ -48,6 +48,7 @@ class Database:
             address varchar(200),
             contact varchar(255),
             ready_post varchar(1000),
+            save_id varchar(150),
 
             PRIMARY KEY (id)
             );
@@ -78,14 +79,15 @@ class Database:
                  salary: str = None,
                  address: str = None,
                  contact: str = None,
-                 ready_post: str = None
+                 ready_post: str = None,
+                 save_id: str = None
                  ):
-        # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
+        # SQL_EXAMPLE = "INSERT INTO Users(id, Name, ) VALUES(1, 'John',)"
 
         sql = """
         INSERT INTO Users(id, name_user, title, name, self_info, education, profession, language, desirable_job, number,
          needed, company_name, duties, schedule, salary, address,
-        contact, ready_post) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        contact, ready_post, save_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         self.execute(sql, parameters=(id, name_user,
                                       title,
@@ -97,7 +99,15 @@ class Database:
                                       schedule, salary,
                                       address, contact,
                                       ready_post,
+                                      save_id
                                       ), commit=True)
+
+    def update_save_id(self, save_id, id):
+
+        sql = f"""
+        UPDATE Users SET save_id=? WHERE id=?
+        """
+        return self.execute(sql, parameters=(save_id, id), commit=True)
 
     def update_ready_post(self, ready_post, id):
 
@@ -169,7 +179,6 @@ class Database:
         return self.execute(sql, fetchall=True)
 
     def select_user(self, **kwargs):
-        # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
         sql = "SELECT * FROM Users WHERE "
         sql, parameters = self.format_args(sql, kwargs)
 
@@ -179,7 +188,6 @@ class Database:
         return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)
 
     def update_user_self_info(self, self_info, id):
-        # SQL_EXAMPLE = "UPDATE Users SET email=mail@gmail.com WHERE id=12345"
 
         sql = f"""
         UPDATE Users SET self_info=? WHERE id=?
@@ -203,7 +211,6 @@ class Database:
         return self.execute(sql, parameters=(education, id), commit=True)
 
     def update_profession(self, profession, id):
-        # SQL_EXAMPLE = "UPDATE Users SET name=name WHERE id=12345"
 
         sql = f"""
         UPDATE Users SET profession=? WHERE id=?
@@ -211,7 +218,6 @@ class Database:
         return self.execute(sql, parameters=(profession, id), commit=True)
 
     def update_language(self, language, id):
-        # SQL_EXAMPLE = "UPDATE Users SET name=name WHERE id=12345"
 
         sql = f"""
         UPDATE Users SET language=? WHERE id=?
@@ -219,7 +225,6 @@ class Database:
         return self.execute(sql, parameters=(language, id), commit=True)
 
     def update_desirable_job(self, desirable_job, id):
-        # SQL_EXAMPLE = "UPDATE Users SET name=name WHERE id=12345"
 
         sql = f"""
         UPDATE Users SET desirable_job=? WHERE id=?
@@ -227,7 +232,6 @@ class Database:
         return self.execute(sql, parameters=(desirable_job, id), commit=True)
 
     def update_number(self, number, id):
-        # SQL_EXAMPLE = "UPDATE Users SET name=name WHERE id=12345"
 
         sql = f"""
         UPDATE Users SET number=? WHERE id=?
