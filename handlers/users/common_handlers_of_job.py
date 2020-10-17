@@ -7,7 +7,7 @@ from aiogram.utils.markdown import hbold
 
 from data.config import admins, channels
 from keyboards.default.menu_buttons import menu, serve, post_buttons
-from keyboards.inline.butons import reply_1, admin_send
+from keyboards.inline.butons import reply_1, admin_send, admin_photo_admin, reply_photo
 from loader import bot, dp, db
 from states import Data, PostData
 
@@ -23,6 +23,17 @@ async def send_to_admin(call: CallbackQuery):
     await call.message.answer('Ваше ответ отправлен админу ждите ответа.')
 
 
+@dp.callback_query_handler(text="admin_photo")
+async def send_to_admin(call: CallbackQuery):
+    await call.answer(cache_time=60)
+
+    text = call.message.html_text
+    admin = admins[0]
+    await call.message.send_copy(admin, reply_markup=reply_photo)
+    await call.message.delete_reply_markup()
+    await call.message.answer('Ваше ответ отправлен админу ждите ответа.')
+
+
 @dp.callback_query_handler(text="confirm")
 async def confirm(call: CallbackQuery):
     await call.answer('вы одобрли этот пост', show_alert=True)
@@ -31,6 +42,7 @@ async def confirm(call: CallbackQuery):
     if len(user) == 10:
         target_channel = channels[0]
         text = call.message.html_text
+        photo = call.message.photo
         text = text[12:]
         await bot.send_message(user, 'Админ подтвердил ваш запрос.',
                                reply_markup=menu)
@@ -140,6 +152,32 @@ async def ready_post(message: types.Message, state: FSMContext):
             user1[17]
         ]
     )
-    await message.answer_photo(photo=user1[18], caption=msg_text, reply_markup=admin_send)
+    await message.answer_photo(photo=user1[18], caption=msg_text, reply_markup=admin_photo_admin)
     # await message.answer(msg_text, reply_markup=admin_send)
     await state.finish()
+
+
+@dp.callback_query_handler(text="confirm_photo")
+async def confirm(call: CallbackQuery):
+    await call.answer('вы одобрли этот пост', show_alert=True)
+    user = re.findall(r'%[1-9].+%', call.message.html_text)
+    user = user[0][1:-1]
+    if len(user) == 10:
+        target_channel = channels[0]
+        text = call.message.html_text
+        photo = call.message.photo[-0].file_id
+        text = text[12:]
+        await bot.send_message(user, 'Админ подтвердил ваш запрос.',
+                               reply_markup=menu)
+        await bot.send_photo(target_channel, photo=photo, caption=text)
+        await call.message.delete_reply_markup()
+    elif len(user) <= 8:
+        target_channel = channels[0]
+        text = call.message.html_text
+        photo = call.message.photo[-0].file_id
+        text = text[11:]
+        await bot.send_message(user, 'Админ подтвердил ваш запрос.',
+                               reply_markup=menu)
+        await bot.send_photo(target_channel, photo=photo, caption=text)
+
+        await call.message.delete_reply_markup()

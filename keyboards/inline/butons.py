@@ -11,6 +11,18 @@ admin_send = InlineKeyboardMarkup(
 
     ], resize_keyboard=True)
 
+admin_photo_admin = InlineKeyboardMarkup(
+    row_width=2,
+
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="отправ админу📤", callback_data='admin_photo'),
+            InlineKeyboardButton(text="Отменит❌", callback_data='cancel')
+        ],
+
+    ], resize_keyboard=True)
+
+
 reply_1 = InlineKeyboardMarkup(
     row_width=2,
 
@@ -22,6 +34,19 @@ reply_1 = InlineKeyboardMarkup(
     ], resize_keyboard=True)
 
 
+reply_photo = InlineKeyboardMarkup(
+    row_width=2,
+
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="подтвердить✅", callback_data='confirm_photo'),
+            InlineKeyboardButton(text="Отменит❌", callback_data='cancel_admin')
+        ],
+    ], resize_keyboard=True)
+
+
+
+
 send_to_channel = InlineKeyboardMarkup(
     row_width=2,
 
@@ -30,3 +55,4 @@ send_to_channel = InlineKeyboardMarkup(
             InlineKeyboardButton(text="сделать пост✅", callback_data='post_in_channel'),
         ],
     ], resize_keyboard=True)
+
