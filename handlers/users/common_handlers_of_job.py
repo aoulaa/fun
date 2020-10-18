@@ -16,7 +16,6 @@ from states import Data, PostData
 async def send_to_admin(call: CallbackQuery):
     await call.answer(cache_time=60)
 
-    text = call.message.html_text
     admin = admins[0]
     await call.message.send_copy(admin, reply_markup=reply_1)
     await call.message.delete_reply_markup()
@@ -71,7 +70,8 @@ async def cancel(call: CallbackQuery):
 
 @dp.callback_query_handler(text="cancel_admin")
 async def cancel_admin(call: CallbackQuery, state: FSMContext):
-    user_id = re.findall(r'%[1-9].+%', call.message.text)
+
+    user_id = re.findall(r'%[1-9].+%', call.message.html_text)
     user_id = user_id[0][1:-1]
     await call.answer(cache_time=20)
     await call.message.answer(hbold('Вы отменили пост, оставьте комментарий почему❗'))
@@ -153,7 +153,6 @@ async def ready_post(message: types.Message, state: FSMContext):
         ]
     )
     await message.answer_photo(photo=user1[18], caption=msg_text, reply_markup=admin_photo_admin)
-    # await message.answer(msg_text, reply_markup=admin_send)
     await state.finish()
 
 

@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.builtin import CommandStart
 
-from keyboards.default.menu_buttons import menu
+from keyboards.default.menu_buttons import menu, serve
 from loader import dp, db
 
 
@@ -27,7 +27,13 @@ async def go_back(message: types.Message):
                          reply_markup=menu)
 
 
-@dp.message_handler(text='🔎 Инфо о нас')
+@dp.message_handler(text='⬅Нaзад')
+async def go_back_to_post_menu(message: types.Message):
+    await message.answer('что вы ищите?',
+                         reply_markup=serve)
+
+
+@dp.message_handler(text='Инфо о нас 🔎')
 async def info_about_company(message: types.Message):
     await message.answer('бла бла бла бла бла бла бла блабла бла бла блабла бла бла блабла бла бла блабла бла бла бла ')
 
@@ -38,6 +44,7 @@ async def number(message: types.message):
     user_table = db.select_from_table()
     name = db.select_name()
     await message.answer(f'каличство усеров: {count}')
+
     await message.answer(f'user id: {user_table}')
     await message.answer(f'имя усеров: {name}')
 

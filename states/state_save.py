@@ -9,4 +9,3 @@ class Data(StatesGroup):
 class PostData(StatesGroup):
 
     save = State()
-

@@ -8,10 +8,10 @@ from keyboards.default.menu_buttons import serve
 from loader import dp, db
 
 
-@dp.message_handler(text='наши услуги')
+@dp.message_handler(text='Заполнять анкету 📋')
 async def service(message: types.message):
     await message.answer('что вы ищите?',
-                         reply_markup=serve, )
+                         reply_markup=serve)
 
 
 @dp.message_handler(text='📝 ищу работу')
