@@ -1,11 +1,11 @@
 import re
-
+from asyncio import sleep
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, ContentType
 from aiogram.utils.markdown import hbold
 
-from data.config import admins, channels
+from data.config import admins, channels, group_username
 from keyboards.default.menu_buttons import menu, serve, post_buttons
 from keyboards.inline.butons import reply_1, admin_send, admin_photo_admin, reply_photo
 from loader import bot, dp, db
@@ -16,8 +16,15 @@ from states import Data, PostData
 async def send_to_admin(call: CallbackQuery):
     await call.answer(cache_time=60)
 
-    admin = admins[0]
-    await call.message.send_copy(admin, reply_markup=reply_1)
+    await call.message.send_copy(group_username[0], reply_markup=reply_1)
+    # for user in admins:
+    #     try:
+    #         await call.message.send_copy(user, reply_markup=reply_1)
+    #
+    #         await sleep(0.3)
+    #     except Exception:
+    #         pass
+
     await call.message.delete_reply_markup()
     await call.message.answer('Ваше ответ отправлен админу ждите ответа.')
 
@@ -25,10 +32,15 @@ async def send_to_admin(call: CallbackQuery):
 @dp.callback_query_handler(text="admin_photo")
 async def send_to_admin(call: CallbackQuery):
     await call.answer(cache_time=60)
+    await call.message.send_copy(group_username[0], reply_markup=reply_photo)
+    # for user in admins:
+    #     try:
+    #         await call.message.send_copy(user, reply_markup=reply_photo)
+    #
+    #         await sleep(0.3)
+    #     except Exception:
+    #         pass
 
-    text = call.message.html_text
-    admin = admins[0]
-    await call.message.send_copy(admin, reply_markup=reply_photo)
     await call.message.delete_reply_markup()
     await call.message.answer('Ваше ответ отправлен админу ждите ответа.')
 
@@ -41,9 +53,8 @@ async def confirm(call: CallbackQuery):
     if len(user) == 10:
         target_channel = channels[0]
         text = call.message.html_text
-        photo = call.message.photo
         text = text[12:]
-        await bot.send_message(user, 'Админ подтвердил ваш запрос.',
+        await bot.send_message(user,'Админ подтвердил ваш запрос.',
                                reply_markup=menu)
         await bot.send_message(target_channel, text)
         await call.message.delete_reply_markup()
@@ -70,7 +81,6 @@ async def cancel(call: CallbackQuery):
 
 @dp.callback_query_handler(text="cancel_admin")
 async def cancel_admin(call: CallbackQuery, state: FSMContext):
-
     user_id = re.findall(r'%[1-9].+%', call.message.html_text)
     user_id = user_id[0][1:-1]
     await call.answer(cache_time=20)
@@ -164,7 +174,7 @@ async def confirm(call: CallbackQuery):
     if len(user) == 10:
         target_channel = channels[0]
         text = call.message.html_text
-        photo = call.message.photo[-0].file_id
+        photo = call.message.photo[-1].file_id
         text = text[12:]
         await bot.send_message(user, 'Админ подтвердил ваш запрос.',
                                reply_markup=menu)
@@ -173,7 +183,7 @@ async def confirm(call: CallbackQuery):
     elif len(user) <= 8:
         target_channel = channels[0]
         text = call.message.html_text
-        photo = call.message.photo[-0].file_id
+        photo = call.message.photo[-1].file_id
         text = text[11:]
         await bot.send_message(user, 'Админ подтвердил ваш запрос.',
                                reply_markup=menu)

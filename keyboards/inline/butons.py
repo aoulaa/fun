@@ -45,8 +45,6 @@ reply_photo = InlineKeyboardMarkup(
     ], resize_keyboard=True)
 
 
-
-
 send_to_channel = InlineKeyboardMarkup(
     row_width=2,
 

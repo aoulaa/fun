@@ -6,6 +6,7 @@ load_dotenv()
 
 BOT_TOKEN = str(os.getenv("BOT_TOKEN"))
 
+group_username = ['@get_group1']
 # admins = [
 #     os.getenv("ADMIN_ID"),
 # ]
