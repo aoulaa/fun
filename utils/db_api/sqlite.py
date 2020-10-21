@@ -71,14 +71,14 @@ class Database:
                  profession: str = None,
                  language: str = None,
                  desirable_job: str = None,
-                 number: str = None,
+                 number: int = None,
                  needed: str = None,
                  company_name: str = None,
                  duties: str = None,
                  schedule: str = None,
                  salary: str = None,
                  address: str = None,
-                 contact: str = None,
+                 contact: int = None,
                  ready_post: str = None,
                  save_id: str = None
                  ):

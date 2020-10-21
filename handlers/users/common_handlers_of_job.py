@@ -1,11 +1,10 @@
 import re
-from asyncio import sleep
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, ContentType
 from aiogram.utils.markdown import hbold
 
-from data.config import admins, channels, group_username
+from data.config import channels, group_username
 from keyboards.default.menu_buttons import menu, serve, post_buttons
 from keyboards.inline.butons import reply_1, admin_send, admin_photo_admin, reply_photo
 from loader import bot, dp, db
@@ -54,7 +53,7 @@ async def confirm(call: CallbackQuery):
         target_channel = channels[0]
         text = call.message.html_text
         text = text[12:]
-        await bot.send_message(user,'Админ подтвердил ваш запрос.',
+        await bot.send_message(user, 'Админ подтвердил ваш запрос.',
                                reply_markup=menu)
         await bot.send_message(target_channel, text)
         await call.message.delete_reply_markup()

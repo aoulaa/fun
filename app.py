@@ -1,5 +1,5 @@
 from loader import bot, storage, db
-# from utils.set_bot_commands import set_default_commands
+from utils.set_bot_commands import set_default_commands
 
 
 async def on_startup(dp):
@@ -16,7 +16,7 @@ async def on_startup(dp):
     # db.delete_users()
     print(db.select_all_users())
     await on_startup_notify(dp)
-    # await set_default_commands(dp)
+    await set_default_commands(dp)
 
 
 async def on_shutdown(dp):

@@ -19,7 +19,7 @@ async def job_want(message: types.message, state: FSMContext):
 async def add_worker(message: types.message, state: FSMContext):
     worker = message.text
     db.update_needed(needed=worker, id=message.from_user.id)
-    await message.answer('Название вашей фирмы/компании:')
+    await message.answer('Название вашей фирмы/компании: ')
 
     await state.set_state("company_name")
 
@@ -64,7 +64,7 @@ async def add_salary(message: types.message, state: FSMContext):
 async def add_address(message: types.message, state: FSMContext):
     address = message.text
     db.update_address(address=address, id=message.from_user.id)
-    await message.answer('Контакт: ')
+    await message.answer('Контакт в формате +998901234567:')
 
     await state.set_state('contact_state')
 
@@ -84,7 +84,7 @@ async def add_contact(message: types.message, state: FSMContext):
              hbold('График работы:  ') + f'{user1[13]}',
              hbold('Зарплата:  ') + f'{user1[14]}',
              hbold('Адрес:  ') + f'{user1[15]}',
-             hbold('Контакт:  ') + f'{user1[16]}',
+             '📞 ' + f'{int(user1[16])}',
              ]
         )
     await message.answer(msg_text, reply_markup=admin_send)

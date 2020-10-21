@@ -49,7 +49,7 @@ async def number(message: types.message):
     await message.answer(f'имя усеров: {name}')
 
 
-@dp.message_handler(Command(['cancel', 'start', 'help']), state="*")
+@dp.message_handler(Command(['cancel', 'restart', 'help']), state="*")
 async def bot_start(message: types.Message, state: FSMContext):
     await state.reset_state()
     await message.answer('если что но пошло не так можете нажмат на /start')

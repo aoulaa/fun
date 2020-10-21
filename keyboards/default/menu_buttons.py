@@ -32,8 +32,7 @@ post_buttons = ReplyKeyboardMarkup(
     resize_keyboard=True,
 )
 
-add_user_button = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Добавит Админ'),
-                                                 KeyboardButton(text='Добавит Канал')],
+add_user_button = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Добавит Канал')],
                                                 ],
                                       one_time_keyboard=True,
                                       resize_keyboard=True,

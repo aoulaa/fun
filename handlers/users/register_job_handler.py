@@ -16,7 +16,7 @@ async def service(message: types.message):
 
 @dp.message_handler(text='📝 ищу работу')
 async def job_want(message: types.message, state: FSMContext):
-    await message.answer('Название вашей объявление:',
+    await message.answer('Название вашей объявление. например ищу работу в офисе: ',
                          reply_markup=ReplyKeyboardRemove())
     await state.set_state("title")
 
@@ -26,7 +26,7 @@ async def add_state(message: types.message, state: FSMContext):
     title = message.text
     db.update_title(title=title, id=message.from_user.id)
     await message.answer('Введите ваше имя и год рождения \n'
-                         'в формате: Олег/dd.mm.1900')
+                         'в формате: Олег, 25')
 
     await state.set_state("name")
 
@@ -80,7 +80,7 @@ async def add_language(message: types.message, state: FSMContext):
 async def add_desirable_job(message: types.message, state: FSMContext):
     desirable_job = message.text
     db.update_desirable_job(desirable_job=desirable_job, id=message.from_user.id)
-    await message.answer('Контакт: ')
+    await message.answer('Контакт в формате +998901234567: ')
 
     await state.set_state('contact')
 
@@ -100,7 +100,7 @@ async def number(message: types.message, state: FSMContext):
              hbold('Профессия:  ') + f'{user1[6]}',
              hbold('Языки:  ') + f'{user1[7]}',
              hbold('Желательная работа:  ') + f'{user1[8]}',
-             hbold('Контакт:  ') + f'{user1[9]}']
+             '📞 ' + f'{int(user1[9])}']
         )
 
     await message.answer(msg_text_1, reply_markup=admin_send)
